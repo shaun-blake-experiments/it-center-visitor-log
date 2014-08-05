@@ -1,3 +1,4 @@
+/*jshint strict: false */
 var services = angular.module('iTCenterVisitorLog.services', []);
 
 services.factory('gcalService', function() {
@@ -23,18 +24,19 @@ services.factory('gcalService', function() {
 	};
 	
 	function handleClientLoad() {
-		console.log("handleClientLoad");
+		console.log('handleClientLoad');
 		gapi.client.setApiKey(GCAL_API_KEY);
 		window.setTimeout(checkAuth,1);
 	}
 	
 	function checkAuth() {
-		console.log("checkAuth");
+		console.log('checkAuth');
+		/*jshint camelcase: false */
 		gapi.auth.authorize({client_id: GCAL_CLIENT_ID, scope: GCAL_SCOPES, immediate: true}, handleClientLoadAuthResult);
 	}
 	
 	function handleClientLoadAuthResult(authResult) {
-		console.log("handleClientLoadAuthResult");
+		console.log('handleClientLoadAuthResult');
 		if (authResult && !authResult.error) {
 			console.log('%cAuthentication Success! The user is already authorized', 'color: green;');
 		} else {
@@ -42,14 +44,15 @@ services.factory('gcalService', function() {
 		}
 	}
 	
-	function handleAuthClick(event) {
-		console.log("handleAuthClick");
+	function handleAuthClick() {
+		console.log('handleAuthClick');
+		/*jshint camelcase: false */
 		gapi.auth.authorize({client_id: GCAL_CLIENT_ID, scope: GCAL_SCOPES, immediate: false}, handleAuthClickAuthResult);
 		return false;
 	}
 	
 	function handleAuthClickAuthResult(authResult) {
-		console.log("handleAuthClickAuthResult");
+		console.log('handleAuthClickAuthResult');
 		if (authResult && !authResult.error) {
 			console.log('%cAuthentication Success! The user is now authorized.', 'color: green;');
 		} else {

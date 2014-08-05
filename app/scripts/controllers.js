@@ -1,3 +1,4 @@
+/*jshint strict: false */
 angular.module('iTCenterVisitorLog.controllers', ['ngRoute'])
 
 .config(function($routeProvider) {
@@ -15,7 +16,7 @@ angular.module('iTCenterVisitorLog.controllers', ['ngRoute'])
 	};
 	
 	$scope.showPage = function (page) {
-		$location.path("/" + page);
+		$location.path('/' + page);
 	};
 	
 	$scope.authenticate = function () {
