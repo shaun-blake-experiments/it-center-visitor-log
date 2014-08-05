@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" ng-app="app">
 <head>
 	<meta charset="utf-8">
 	<title>it center visitor log</title>
@@ -33,6 +33,16 @@
 	
 	<div class="content" ng-app>
 		<section>
+			<paper-dialog toggle-model-variable="showNgDialog" heading="Angular/Polymer Dialog"
+				transition="paper-dialog-transition-bottom">
+				<p>This is a Polymer dialog integrated with AngularJS.</p>
+				<paper-button label="Cancel" dismissive ng-click="showNgDialog=false"></paper-button>
+				<paper-button label="OK" affirmative default ng-click="showNgDialog=false"></paper-button>
+			</paper-dialog>
+			<paper-button raisedButton class="colored" label="Dialog" ng-click="showNgDialog=true"></paper-button>
+		</section>
+
+		<section>
 			<label>Name:</label>
 			<input type="text" ng-model="yourName" placeholder="Enter a name here">
 			<hr>
@@ -40,7 +50,7 @@
 		</section>
 		
 		<section>
-			<paper-toast id="toast1" text="{{yourName}}"></paper-toast>
+			<paper-toast id="toast1" text="Integrated with angular - {{yourName}}"></paper-toast>
 			<paper-button raisedButton class="colored" label="Toast" onclick="document.querySelector('#toast1').show()"></paper-button>
 		</section>
 		
@@ -86,6 +96,8 @@
 
 <!-- build:js({app,.tmp}) scripts/main.js -->
 <script src="scripts/main.js"></script>
+<script src="scripts/components.js"></script>
+<script src="scripts/app.js"></script>
 <!-- endbuild -->
 
 </body>
