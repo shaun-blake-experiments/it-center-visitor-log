@@ -164,7 +164,8 @@ module.exports = function (grunt) {
     wiredep: {
       app: {
         ignorePath: new RegExp('^<%= config.app %>/|../'),
-        src: ['<%= config.app %>/index.html']
+        src: ['<%= config.app %>/index.html'],
+        exclude: ['polymer.js']
       }
     },
 
