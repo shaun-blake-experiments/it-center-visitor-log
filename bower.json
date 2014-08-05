@@ -1,0 +1,8 @@
+{
+  "name": "it-center-visitor-log",
+  "private": true,
+  "dependencies": {
+    "jquery": "~1.11.1"
+  },
+  "devDependencies": {}
+}
