@@ -32,6 +32,10 @@
 	<span tool>Title</span>
 	
 	<div class="content" ng-app>
+		<section ng-controller="MainCtrl" data-ng-init="init()">
+			<paper-button raisedButton class="colored" label="Authenticate" ng-click="authenticate();"></paper-button>
+		</section>
+		
 		<section>
 			<paper-dialog ng-polymer-dialog-show-model="showDialog" heading="Angular/Polymer Dialog"
 				transition="paper-dialog-transition-bottom">
@@ -71,6 +75,7 @@
 <script src="bower_components/angular-resource/angular-resource.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/platform/platform.js"></script>
+<script src="https://apis.google.com/js/client.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 

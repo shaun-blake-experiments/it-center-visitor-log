@@ -7,16 +7,18 @@ angular.module('iTCenterVisitorLog.controllers', ['ngRoute'])
 		});
 })
 
-.controller('MainCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
+.controller('MainCtrl', ['$scope', '$http', '$location', 'gcalService', function($scope, $http, $location, gcalService) {
 	
 	//Put the startup code at the top where it's easy to find
-	var initialize = function() {
-		
+	$scope.init = function() {
+		gcalService.init();
 	};
 	
 	$scope.showPage = function (page) {
 		$location.path("/" + page);
 	};
 	
-	initialize();
+	$scope.authenticate = function () {
+		gcalService.authenticate();
+	};
 }]);
