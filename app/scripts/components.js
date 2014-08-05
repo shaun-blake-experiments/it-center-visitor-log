@@ -1,12 +1,10 @@
-angular.module('components', [])
-.directive('toggleModelVariable', function() {
+angular.module('iTCenterVisitorLog.components', [])
+.directive('ngPolymerDialogShowModel', function() {
   return {
       restrict: 'A',
       template: '',
-      link: function(scope, element, attrs, toggleModelVariableCtrl) {
-        console.log("got here");
-        
-        var scopeVarToWatch = attrs.toggleModelVariable;
+      link: function(scope, element, attrs) {
+        var scopeVarToWatch = attrs.ngPolymerDialogShowModel;
         if(!scope[scopeVarToWatch]) {
         	scope[scopeVarToWatch] = false;
         }

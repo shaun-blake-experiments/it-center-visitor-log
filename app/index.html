@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" ng-app="app">
+<html class="no-js" ng-app="iTCenterVisitorLog">
 <head>
 	<meta charset="utf-8">
 	<title>it center visitor log</title>
@@ -33,13 +33,13 @@
 	
 	<div class="content" ng-app>
 		<section>
-			<paper-dialog toggle-model-variable="showNgDialog" heading="Angular/Polymer Dialog"
+			<paper-dialog ng-polymer-dialog-show-model="showDialog" heading="Angular/Polymer Dialog"
 				transition="paper-dialog-transition-bottom">
 				<p>This is a Polymer dialog integrated with AngularJS.</p>
-				<paper-button label="Cancel" dismissive ng-click="showNgDialog=false"></paper-button>
-				<paper-button label="OK" affirmative default ng-click="showNgDialog=false"></paper-button>
+				<paper-button label="Cancel" dismissive ng-click="showDialog=false"></paper-button>
+				<paper-button label="OK" affirmative default ng-click="showDialog=false"></paper-button>
 			</paper-dialog>
-			<paper-button raisedButton class="colored" label="Dialog" ng-click="showNgDialog=true"></paper-button>
+			<paper-button raisedButton class="colored" label="Dialog" ng-click="showDialog=true"></paper-button>
 		</section>
 
 		<section>
@@ -67,6 +67,9 @@
 <!-- build:js(.) scripts/vendor.js -->
 <!-- bower:js -->
 <script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-googleapi/src/angular-googleapi.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/platform/platform.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
@@ -95,9 +98,10 @@
 </script>
 
 <!-- build:js({app,.tmp}) scripts/main.js -->
-<script src="scripts/main.js"></script>
-<script src="scripts/components.js"></script>
 <script src="scripts/app.js"></script>
+<script src="scripts/controllers.js"></script>
+<script src="scripts/components.js"></script>
+<script src="scripts/services.js"></script>
 <!-- endbuild -->
 
 </body>
