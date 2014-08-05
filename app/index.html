@@ -17,9 +17,42 @@
 	<!-- endbuild -->
 	
 </head>
-<!--[if lt IE 10]>
-	<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-<![endif]-->
+<body fullbleed>
+<core-scaffold>
+	<core-header-panel navigation flex>
+		<core-toolbar id="navheader">
+			<span>Menu</span>
+		</core-toolbar>
+		<core-menu>
+			<core-item label="One"></core-item>
+			<core-item label="Two"></core-item>
+		</core-menu>
+	</core-header-panel>
+
+	<span tool>Title</span>
+	
+	<div class="content" ng-app>
+		<section>
+			<label>Name:</label>
+			<input type="text" ng-model="yourName" placeholder="Enter a name here">
+			<hr>
+			<h1>Hello {{yourName}}</h1>
+		</section>
+		
+		<section>
+			<paper-toast id="toast1" text="{{yourName}}"></paper-toast>
+			<paper-button raisedButton class="colored" label="Toast" onclick="document.querySelector('#toast1').show()"></paper-button>
+		</section>
+		
+		<section>
+			<div>Raised buttons</div>
+			<paper-button raisedButton label="button" z-height="0"></paper-button>
+			<paper-button raisedButton class="colored" label="colored"></paper-button>
+			<paper-button raisedButton focused label="focused"></paper-button>
+			<paper-button raisedButton disabled label="disabled" onclick="alert('should not be clickable');"></paper-button>
+		</section>
+	</div>
+</core-scaffold>
 
 <!-- build:js(.) scripts/vendor.js -->
 <!-- bower:js -->
