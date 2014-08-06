@@ -1,16 +1,20 @@
 /*jshint strict: false */
 var services = angular.module('iTCenterVisitorLog.services', []);
 
-services.factory('googleAuthService', ['$q', function($q) {
+//API Key = non authenticated calls, Client ID = authenticated
+//These are dev api keys associated with my sfblake@hawaii.edu google account.
+//They could be switched off to a non-person type MIS account.
+	
+services.constant("GCAL_API_KEY", 'AIzaSyAUHHYoyPmYh5WwI7ft33RwLlwKUSnAagc');
+services.constant("GCAL_CLIENT_ID", '362056014565-n35ka76g1hakh8ujp28likuoa9rcol45.apps.googleusercontent.com');
+services.constant("GCAL_SCOPES",
+	[
+		'https://www.googleapis.com/auth/calendar',
+		'https://www.googleapis.com/auth/calendar',
+	]);
+
+services.factory('googleAuthService', ['GCAL_API_KEY', 'GCAL_CLIENT_ID', 'GCAL_SCOPES', '$q', function(GCAL_API_KEY, GCAL_CLIENT_ID, GCAL_SCOPES, $q) {
 	var googleAuthService = {};
-	
-	//API Key = non authenticated calls, Client ID = authenticated
-	//These are dev api keys associated with my sfblake@hawaii.edu google account.
-	//They could be switched off to a non-person type MIS account.
-	var GCAL_API_KEY = 'AIzaSyAUHHYoyPmYh5WwI7ft33RwLlwKUSnAagc';
-	var GCAL_CLIENT_ID = '362056014565-n35ka76g1hakh8ujp28likuoa9rcol45.apps.googleusercontent.com';
-	var GCAL_SCOPES = 'https://www.googleapis.com/auth/calendar';
-	
 	
 	googleAuthService.init = function(){
 		console.log('%cInitiating...', 'color: blue;');
@@ -51,4 +55,5 @@ services.factory('googleAuthService', ['$q', function($q) {
 	
 	return googleAuthService;
 }]);
+
 
