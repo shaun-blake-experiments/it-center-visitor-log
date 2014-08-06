@@ -17,22 +17,23 @@
 	<!-- endbuild -->
 	
 </head>
-<body fullbleed>
+<body fullbleed ng-app ng-controller="MainCtrl" data-ng-init="init()">
 <core-scaffold>
 	<core-header-panel navigation flex>
 		<core-toolbar id="navheader">
 			<span>Menu</span>
 		</core-toolbar>
 		<core-menu>
-			<core-item label="One"></core-item>
+			<core-item label="Not Authenticated" ng-if="authenticated == false" ng-click="authenticate();"></core-item>
+			<core-item label="Authenticated" ng-if="authenticated == true"></core-item>
 			<core-item label="Two"></core-item>
 		</core-menu>
 	</core-header-panel>
 
 	<span tool>Title</span>
 	
-	<div class="content" ng-app>
-		<section ng-controller="MainCtrl" data-ng-init="init()">
+	<div class="content">
+		<section>
 			<paper-button raisedButton class="colored" label="Authenticate" ng-click="authenticate();"></paper-button>
 		</section>
 		

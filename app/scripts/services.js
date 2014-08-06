@@ -1,7 +1,7 @@
 /*jshint strict: false */
 var services = angular.module('iTCenterVisitorLog.services', []);
 
-services.factory('gcalService', function() {
+services.factory('gcalService', ['$q', function($q) {
 	var gCalServices = {};
 	
 	//API Key = non authenticated calls, Client ID = authenticated
@@ -14,52 +14,44 @@ services.factory('gcalService', function() {
 	
 	gCalServices.init = function(){
 		console.log('%cInitiating...', 'color: blue;');
-		handleClientLoad();
-		
+		gapi.client.setApiKey(GCAL_API_KEY);
+		//Wait 1 second before calling the authorize method (since the example does)
+		window.setTimeout(this.isAuthorized, 1);
 	};
+	
+		
+	gCalServices.isAuthenticated = function(){
+		console.log('%cChecking Authenticated...', 'color: blue;');
+		gapi.client.setApiKey(GCAL_API_KEY);
+		var deferred = $q.defer();
+
+		/*jshint camelcase: false */
+		gapi.auth.authorize({client_id: GCAL_CLIENT_ID, scope: GCAL_SCOPES, immediate: true}, function(authResult) {
+			var authenticated = authResult && !authResult.error;
+			console.log('Authenticated: ' + authenticated);
+			deferred.resolve(authenticated);
+		});
+		
+		return deferred.promise;
+	};
+	
 	gCalServices.authenticate = function(){
 		console.log('%cAuthenticating...', 'color: blue;');
-		handleAuthClick();
+		var deferred = $q.defer();
 		
+		/*jshint camelcase: false */
+		gapi.auth.authorize({client_id: GCAL_CLIENT_ID, scope: GCAL_SCOPES, immediate: false}, function(authResult) {
+			var authenticated = authResult && !authResult.error;
+			console.log('Authenticated: ' + authenticated);
+			deferred.resolve(authenticated);
+		});
+		
+		return deferred.promise;
 	};
 	
-	function handleClientLoad() {
-		console.log('handleClientLoad');
-		gapi.client.setApiKey(GCAL_API_KEY);
-		window.setTimeout(checkAuth,1);
-	}
-	
-	function checkAuth() {
-		console.log('checkAuth');
-		/*jshint camelcase: false */
-		gapi.auth.authorize({client_id: GCAL_CLIENT_ID, scope: GCAL_SCOPES, immediate: true}, handleClientLoadAuthResult);
-	}
-	
-	function handleClientLoadAuthResult(authResult) {
-		console.log('handleClientLoadAuthResult');
-		if (authResult && !authResult.error) {
-			console.log('%cAuthentication Success! The user is already authorized', 'color: green;');
-		} else {
-			console.log('%cAuthentication Failed! The user will need to authorize.', 'background-color: yellow;');
-		}
-	}
-	
-	function handleAuthClick() {
-		console.log('handleAuthClick');
-		/*jshint camelcase: false */
-		gapi.auth.authorize({client_id: GCAL_CLIENT_ID, scope: GCAL_SCOPES, immediate: false}, handleAuthClickAuthResult);
-		return false;
-	}
-	
-	function handleAuthClickAuthResult(authResult) {
-		console.log('handleAuthClickAuthResult');
-		if (authResult && !authResult.error) {
-			console.log('%cAuthentication Success! The user is now authorized.', 'color: green;');
-		} else {
-			console.log('%cAuthentication Failed!  Maybe they hit cancel?', 'color: red;');
-			console.log(authResult);
-		}
+	function handleAuthResult(promise) {
+		
 	}
 	
 	return gCalServices;
-});
+}]);

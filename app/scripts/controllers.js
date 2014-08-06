@@ -9,10 +9,14 @@ angular.module('iTCenterVisitorLog.controllers', ['ngRoute'])
 })
 
 .controller('MainCtrl', ['$scope', '$http', '$location', 'gcalService', function($scope, $http, $location, gcalService) {
+	$scope.authenticated = false;
 	
 	//Put the startup code at the top where it's easy to find
 	$scope.init = function() {
 		gcalService.init();
+		gcalService.isAuthenticated().then(function(authenticated) {
+			$scope.authenticated = authenticated;
+		});
 	};
 	
 	$scope.showPage = function (page) {
@@ -20,6 +24,8 @@ angular.module('iTCenterVisitorLog.controllers', ['ngRoute'])
 	};
 	
 	$scope.authenticate = function () {
-		gcalService.authenticate();
+		gcalService.authenticate().then(function(authenticated) {
+			$scope.authenticated = authenticated;
+		});
 	};
 }]);
