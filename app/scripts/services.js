@@ -5,12 +5,12 @@ var services = angular.module('iTCenterVisitorLog.services', []);
 //These are dev api keys associated with my sfblake@hawaii.edu google account.
 //They could be switched off to a non-person type MIS account.
 	
-services.constant("GCAL_API_KEY", 'AIzaSyAUHHYoyPmYh5WwI7ft33RwLlwKUSnAagc');
-services.constant("GCAL_CLIENT_ID", '362056014565-n35ka76g1hakh8ujp28likuoa9rcol45.apps.googleusercontent.com');
-services.constant("GCAL_SCOPES",
+services.constant('GCAL_API_KEY', 'AIzaSyAUHHYoyPmYh5WwI7ft33RwLlwKUSnAagc');
+services.constant('GCAL_CLIENT_ID', '362056014565-n35ka76g1hakh8ujp28likuoa9rcol45.apps.googleusercontent.com');
+services.constant('GCAL_SCOPES',
 	[
 		'https://www.googleapis.com/auth/calendar',
-		'https://www.googleapis.com/auth/calendar',
+		'https://www.googleapis.com/auth/userinfo.email',
 	]);
 
 services.factory('googleAuthService', ['GCAL_API_KEY', 'GCAL_CLIENT_ID', 'GCAL_SCOPES', '$q', function(GCAL_API_KEY, GCAL_CLIENT_ID, GCAL_SCOPES, $q) {
@@ -20,13 +20,12 @@ services.factory('googleAuthService', ['GCAL_API_KEY', 'GCAL_CLIENT_ID', 'GCAL_S
 		console.log('%cInitiating...', 'color: blue;');
 		gapi.client.setApiKey(GCAL_API_KEY);
 		//Wait 1 second before calling the authorize method (since the example does)
-		window.setTimeout(this.isAuthorized, 1);
+		window.setTimeout(this.isAuthenticated, 1);
 	};
 	
 		
 	googleAuthService.isAuthenticated = function(){
 		console.log('%cChecking Authenticated...', 'color: blue;');
-		gapi.client.setApiKey(GCAL_API_KEY);
 		var deferred = $q.defer();
 
 		/*jshint camelcase: false */
@@ -54,6 +53,24 @@ services.factory('googleAuthService', ['GCAL_API_KEY', 'GCAL_CLIENT_ID', 'GCAL_S
 	};
 	
 	return googleAuthService;
+}]);
+
+services.factory('googlePlusService', ['GCAL_API_KEY', 'GCAL_CLIENT_ID', 'GCAL_SCOPES', '$q', function(GCAL_API_KEY, GCAL_CLIENT_ID, GCAL_SCOPES, $q) {
+	var googlePlusService = {};
+	
+	googlePlusService.getUserInfo = function(){
+		console.log('%cGetting Google Plus User Info', 'color: blue;');
+		var deferred = $q.defer();
+		gapi.client.load('plus', 'v1', function() {
+			gapi.client.plus.people.get({userId: 'me'}).execute(function(resp) {
+				console.log(resp);
+				deferred.resolve(resp);
+			});
+		});
+		return deferred.promise;
+	};
+	
+	return googlePlusService;
 }]);
 
 

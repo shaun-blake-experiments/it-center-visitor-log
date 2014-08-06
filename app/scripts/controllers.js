@@ -8,13 +8,22 @@ angular.module('iTCenterVisitorLog.controllers', ['ngRoute'])
 		});
 })
 
-.controller('MainCtrl', ['$scope', '$http', '$location', 'googleAuthService', function($scope, $http, $location, googleAuthService) {
+.controller('MainCtrl', ['$scope', '$http', '$location', 'googleAuthService', 'googlePlusService', function($scope, $http, $location, googleAuthService, googlePlusService) {
 	$scope.authenticated = false;
+	$scope.userInfoResolved = false;
+	$scope.userInfo = {};
 	
 	$scope.init = function() {
 		googleAuthService.init();
 		googleAuthService.isAuthenticated().then(function(authenticated) {
 			$scope.authenticated = authenticated;
+			if(!authenticated) {
+				return;
+			}
+			googlePlusService.getUserInfo().then(function(userInfo) {
+				$scope.userInfo = userInfo;
+				$scope.userInfoResolved = true;
+			});
 		});
 	};
 	
@@ -23,6 +32,9 @@ angular.module('iTCenterVisitorLog.controllers', ['ngRoute'])
 	};
 	
 	$scope.authenticate = function () {
+		if($scope.authenticated) {
+			return;
+		}
 		googleAuthService.authenticate().then(function(authenticated) {
 			$scope.authenticated = authenticated;
 		});
