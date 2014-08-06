@@ -1,8 +1,8 @@
 /*jshint strict: false */
 var services = angular.module('iTCenterVisitorLog.services', []);
 
-services.factory('gcalService', ['$q', function($q) {
-	var gCalServices = {};
+services.factory('googleAuthService', ['$q', function($q) {
+	var googleAuthService = {};
 	
 	//API Key = non authenticated calls, Client ID = authenticated
 	//These are dev api keys associated with my sfblake@hawaii.edu google account.
@@ -12,7 +12,7 @@ services.factory('gcalService', ['$q', function($q) {
 	var GCAL_SCOPES = 'https://www.googleapis.com/auth/calendar';
 	
 	
-	gCalServices.init = function(){
+	googleAuthService.init = function(){
 		console.log('%cInitiating...', 'color: blue;');
 		gapi.client.setApiKey(GCAL_API_KEY);
 		//Wait 1 second before calling the authorize method (since the example does)
@@ -20,7 +20,7 @@ services.factory('gcalService', ['$q', function($q) {
 	};
 	
 		
-	gCalServices.isAuthenticated = function(){
+	googleAuthService.isAuthenticated = function(){
 		console.log('%cChecking Authenticated...', 'color: blue;');
 		gapi.client.setApiKey(GCAL_API_KEY);
 		var deferred = $q.defer();
@@ -35,7 +35,7 @@ services.factory('gcalService', ['$q', function($q) {
 		return deferred.promise;
 	};
 	
-	gCalServices.authenticate = function(){
+	googleAuthService.authenticate = function(){
 		console.log('%cAuthenticating...', 'color: blue;');
 		var deferred = $q.defer();
 		
@@ -49,9 +49,6 @@ services.factory('gcalService', ['$q', function($q) {
 		return deferred.promise;
 	};
 	
-	function handleAuthResult(promise) {
-		
-	}
-	
-	return gCalServices;
+	return googleAuthService;
 }]);
+
