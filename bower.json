@@ -11,7 +11,8 @@
     "paper-elements": "Polymer/paper-elements#~0.3.4",
     "polymer": "Polymer/polymer#~0.3.4",
     "x-fontawesome": "~0.2.0",
-    "moment": "~2.8.1"
+    "moment": "~2.8.1",
+    "ng-polymer-elements": "~0.1.0"
   },
   "devDependencies": {}
 }

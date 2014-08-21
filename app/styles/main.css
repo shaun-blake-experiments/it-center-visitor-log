@@ -35,16 +35,6 @@ paper-button[raisedButton].colored::shadow #focusBg {
 	background: #3367d6;
 }
 
-core-header-panel {
-	background-color: #eaeaea;
-}
-
-core-toolbar {
-	background: #009688;
-	color: white;
-	/*UH Manoa Green - 025E5B*/
-}
-
 .content {
 	padding: 20px;
 }

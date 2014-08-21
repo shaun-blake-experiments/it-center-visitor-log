@@ -4,7 +4,7 @@
 <link rel="import" href="/bower_components/core-icon/core-icon.html">
 <link rel="import" href="/bower_components/core-icons/social-icons.html">
 
-<polymer-element name="calendar-event" attributes="summary, organizer, attendeesArrayString, badgesArrayString" extends="polymer-ui-card">
+<polymer-element name="calendar-event" attributes="summary, organizer, attendees, badges" extends="polymer-ui-card">
 <template>
 	<style>
 	:host {
@@ -23,10 +23,12 @@
 	core-icon {
 		color: grey;
 	}
-
+	#attendees {
+		min-width: 75px;
+	}
 	</style>
 		<div layout horizontal>
-			<div layout flex one style="min-width:50px">
+			<div layout flex one id="attendees">
 				<template repeat="{{attendee, i in attendees}}">
 					<core-icon icon="social:person"></core-icon>
 					<template if="{{i < badges.length}}">
@@ -46,31 +48,7 @@
 </template>
 	
 <script>
-	Polymer('calendar-event', {
-		/*
-			This is a hack to let angularjs control the attendees array.
-			When angular passes the array, it passes a string version.
-			We need to watch for changes from angular to the string version
-			and convert it to an actual array we can use.
-		*/
-		
-		created: function() {
-			this.attendees = [];
-			this.badges = [];
-		},
-		attributeChanged: function(attrName, oldVal, newVal) {
-			if(attrName == "attendeesarraystring") {
-				if(this.attendeesArrayString) {
-					this.attendees = JSON.parse(this.attendeesArrayString);
-				}
-			}
-			if(attrName == "badgesarraystring") {
-				if(this.badgesArrayString) {
-					this.badges = JSON.parse(this.badgesArrayString);
-				}
-			}
-		}
-	});
+	Polymer('calendar-event', {});
 </script>
 	
 </polymer-element>

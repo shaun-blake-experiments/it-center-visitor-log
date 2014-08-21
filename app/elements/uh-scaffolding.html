@@ -1,0 +1,80 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/core-header-panel/core-header-panel.html">
+<link rel="import" href="/bower_components/core-icons/core-icons.html">
+<link rel="import" href="/bower_components/core-iconset-svg/core-iconset-svg.html">
+<link rel="import" href="/bower_components/core-icons/social-icons.html">
+<link rel="import" href="/bower_components/paper-item/paper-item.html">
+<link rel="import" href="/bower_components/core-menu/core-menu.html">
+<link rel="import" href="/bower_components/core-menu-button/core-menu-button.html">
+<link rel="import" href="/bower_components/core-scaffold/core-scaffold.html">
+<link rel="import" href="/bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="/bower_components/font-roboto/roboto.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+<link rel="import" href="/bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="/bower_components/paper-progress/paper-progress.html">
+<link rel="import" href="/bower_components/paper-shadow/paper-shadow.html">
+<link rel="import" href="/bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="/bower_components/polymer-ui-card/polymer-ui-card.html">
+<link rel="import" href="/bower_components/x-fontawesome/dist/x-fontawesome.html">
+
+<polymer-element name="uh-scaffolding" attributes="user">
+<template>
+	<style>
+		core-header-panel {
+			background-color: #eaeaea;
+		}
+		
+		core-toolbar {
+			background: #009688;
+			color: white;
+			/*UH Manoa Green - 025E5B*/
+		}
+		.divider {
+			margin: 20px 0px;
+			height: 3px;
+			background: #f9f9f9;
+			border-radius: 2px;
+			padding: 0;
+		}
+		.divider core-icon {
+			margin-bottom: 1px;
+			fill: #919cd6;
+			background: #eaeaea
+		}
+	</style>
+	
+	<core-drawer-panel id="drawerPanel">
+		<div vertical layout drawer>
+			<core-toolbar><core-icon icon="social:domain"></core-icon> IT Center Visitors</core-toolbar>
+			<core-menu selected="0" selectedItem="{{selectMenuItem}}">
+				<paper-item label="Schedule"></paper-item>
+				<paper-item label="Current Visitors"></paper-item>
+				<div class="divider" layout horizontal center center-justified>
+					<core-icon icon="social:domain" style="background: white"></core-icon>
+				</div>
+				<paper-item icon="account-box" label="{{user.emails[0].value}}" ></paper-item>
+			</core-menu>
+		</div>
+		
+		<core-header-panel main mode="waterfall">
+			<core-toolbar>
+				<core-icon-button icon="menu"></core-icon-button>
+				<div flex></div>
+				<div class="middle indent">{{selectMenuItem.label}}</div>
+				
+				<core-icon-button icon="refresh"></core-icon-button>
+				
+				<paper-progress value="800" min="100" max="1000" class="bottom fit"></paper-progress>
+			</core-toolbar>
+			
+			<div class="content">
+				<content></content>
+			</div>
+		</core-header-panel>
+	</core-drawer-panel>
+</template>
+
+<script>
+Polymer({});
+</script>
+</polymer-element>

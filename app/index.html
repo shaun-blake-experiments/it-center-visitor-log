@@ -17,52 +17,23 @@
 	<!-- endbuild -->
 	
 </head>
-<body fullbleed ng-app ng-controller="MainCtrl" data-ng-init="init()">
-
-<core-drawer-panel id="drawerPanel">
-	<div vertical layout drawer>
-		<core-toolbar><core-icon icon="social:domain"></core-icon> IT Center Visitors</core-toolbar>
-		<core-menu selected="0" selectedItem="{{selectMenuItem}}">
-			<core-item label="Schedule"></core-item>
-			<core-item label="Current Visitors"></core-item>
-			<div class="divider" layout horizontal center center-justified>
-				<core-icon icon="social:domain" style="background: white"></core-icon>
-			</div>
-			<!-- TODO -- change this to be part of the initial load.  By the time we get to this page
-					the user should be logged in -->
-			<core-item icon="account-box" ng-show="authenticated && userInfoResolved" label="{{userInfo.emails[0].value}}" ></core-item>
-			<core-item icon="account-box" ng-show="!(authenticated && userInfoResolved)" label="Sign In" ng-click="authenticate();"><a href="#account" target="_self"></a></core-item>
-		</core-menu>
-	</div>
-	
-	<core-header-panel main mode="waterfall">
-		<core-toolbar>
-			<core-icon-button icon="menu"></core-icon-button>
-			<div flex></div>
-			<div class="middle indent">Label: {{selectMenuItem.label}}</div>
-			
-			<core-icon-button icon="refresh"></core-icon-button>
-			
-			<paper-progress value="800" min="100" max="1000" class="bottom fit"></paper-progress>
-		</core-toolbar>
-		
-		<div class="content">
-			<section>
-				<input type="search" ng-model="q" placeholder="filter friends..." />
-				<br/>
-				<div layout horizontal wrap center center-justified>
-					<calendar-event self-stretch summary="{{event.summary}}" organizer="{{event.organizer.displayName}}" attendeesArrayString="{{event.attendees}}" badgesArrayString="{{event.badges}}" ng-repeat="event in calendarEvents.items | filter:q"></calendar-event>
-				</div>
-				<div class="divider" layout horizontal center center-justified>
-					<core-icon icon="social:domain"></core-icon>
-				</div>
-			</section>
+<body unresolved fullbleed ng-controller="MainCtrl" data-ng-init="init()">
+<uh-scaffolding ng-user="userInfo">
+	<section>
+		<input type="search" ng-model="q" placeholder="Search..." />
+		<br/>
+		<div layout horizontal wrap center center-justified>
+			<calendar-event self-stretch summary="{{event.summary}}" organizer="{{event.organizer.displayName}}" ng-attendees="event.attendees" ng-badges="event.badges" ng-repeat="event in calendarEvents.items | filter:q"></calendar-event>
 		</div>
-	</core-header-panel>
-</core-drawer-panel>
-
+		<div class="divider" layout horizontal center center-justified>
+			<core-icon icon="social:domain"></core-icon>
+		</div>
+	</section>
+</uh-scaffolding>
 
 <!-- build:js(.) scripts/vendor.js -->
+<!-- ng-polymer-elements script needs the config loaded first -->
+<script src="scripts/ng-polymer-elements-cfg.js"></script>
 <!-- bower:js -->
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-googleapi/src/angular-googleapi.js"></script>
@@ -70,27 +41,15 @@
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/platform/platform.js"></script>
 <script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/ng-polymer-elements/ng-polymer-elements.js"></script>
 <!-- endbower -->
 <script src="https://apis.google.com/js/client.js"></script>
 <!-- endbuild -->
 
-<link rel="import" href="/bower_components/core-header-panel/core-header-panel.html">
-<link rel="import" href="/bower_components/core-icons/core-icons.html">
-<link rel="import" href="/bower_components/core-iconset-svg/core-iconset-svg.html">
-<link rel="import" href="/bower_components/core-icons/social-icons.html">
-<link rel="import" href="/bower_components/core-item/core-item.html">
-<link rel="import" href="/bower_components/core-menu/core-menu.html">
-<link rel="import" href="/bower_components/core-menu-button/core-menu-button.html">
-<link rel="import" href="/bower_components/core-scaffold/core-scaffold.html">
-<link rel="import" href="/bower_components/core-toolbar/core-toolbar.html">
-<link rel="import" href="/bower_components/font-roboto/roboto.html">
-<link rel="import" href="/bower_components/paper-button/paper-button.html">
-<link rel="import" href="/bower_components/paper-dialog/paper-dialog.html">
-<link rel="import" href="/bower_components/paper-progress/paper-progress.html">
-<link rel="import" href="/bower_components/paper-shadow/paper-shadow.html">
-<link rel="import" href="/bower_components/paper-toast/paper-toast.html">
-<link rel="import" href="/bower_components/polymer-ui-card/polymer-ui-card.html">
-<link rel="import" href="/bower_components/x-fontawesome/dist/x-fontawesome.html">
+
+<link rel="import" href="/bower_components/core-input/core-input.html">
+<link rel="import" href="/bower_components/paper-input/paper-input.html">
+<link rel="import" href="/elements/uh-scaffolding.html">
 <link rel="import" href="/elements/calendar-event.html">
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
