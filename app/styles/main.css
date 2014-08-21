@@ -1,43 +1,63 @@
 body {
-  font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+	font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
 }
 
 section {
-  padding: 20px 0;
+	padding: 20px 0;
 }
 
 section > div {
-  padding: 14px;
+	padding: 14px;
 }
 
 paper-button {
-  margin: 1em;
-  width: 10em;
+	margin: 1em;
+	width: 10em;
 }
 
 paper-button.colored {
-  color: #4285f4;
-  fill: #4285f4;
+	color: #4285f4;
+	fill: #4285f4;
 }
 
 paper-button[raisedButton].colored {
-  background: #4285f4;
-  color: #fff;
+	background: #4285f4;
+	color: #fff;
 }
 
 paper-button[raisedButton].colored #ripple,
 paper-button[raisedButton].colored::shadow #ripple {
-  color: #2a56c6;
+	color: #2a56c6;
 }
 
 paper-button[raisedButton].colored #focusBg,
 paper-button[raisedButton].colored::shadow #focusBg {
-  background: #3367d6;
+	background: #3367d6;
 }
 
-#navheader {
-  background-color: #56BA89;
+core-header-panel {
+	background-color: #eaeaea;
 }
+
+core-toolbar {
+	background: #009688;
+	color: white;
+	/*UH Manoa Green - 025E5B*/
+}
+
 .content {
-  padding: 20px;
+	padding: 20px;
+}
+
+.divider {
+	margin: 20px 0px;
+	height: 3px;
+	background: #f9f9f9;
+	border-radius: 2px;
+	padding: 0;
+}
+.divider core-icon {
+	margin-bottom: 1px;
+	fill: #919cd6;
+	background: #eaeaea
 }

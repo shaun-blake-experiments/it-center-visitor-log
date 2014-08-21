@@ -10,7 +10,8 @@
     "font-awesome": "~4.1.0",
     "paper-elements": "Polymer/paper-elements#~0.3.4",
     "polymer": "Polymer/polymer#~0.3.4",
-    "x-fontawesome": "~0.2.0"
+    "x-fontawesome": "~0.2.0",
+    "moment": "~2.8.1"
   },
   "devDependencies": {}
 }

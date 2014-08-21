@@ -1,0 +1,186 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/font-roboto/roboto.html">
+<link rel="import" href="/bower_components/polymer-ui-card/polymer-ui-card.html">
+<link rel="import" href="/bower_components/core-animated-pages/core-animated-pages.html">
+<link rel="import" href="/bower_components/core-animated-pages/transitions/cross-fade.html">
+<link rel="import" href="/bower_components/core-icons/core-icons.html">
+<link rel="import" href="/bower_components/core-icons/social-icons.html">
+
+<polymer-element name="event-grid">
+	<template>
+		<style>
+		/*.chip {
+			display: inline-block;
+			position: relative;
+			border-radius: 3px;
+			margin: 4px;
+			overflow: hidden;
+			text-align: start;
+			background-color: #fff;
+			box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
+		}
+	
+		.chip-top {
+			height: 200px;
+			border-top-left-radius: 3px;
+			border-top-right-radius: 3px;
+		}
+	
+		.chip-bottom {
+			padding: 8px;
+			line-height: 1.5;
+		}
+	
+		.chip-album-title {
+			font-weight: bold;
+		}
+	
+		#details {
+			padding: 10% 10% 0;
+		}
+	
+		.card {
+			height: 400px;
+			border-radius: 3px;
+			text-align: start;
+			overflow: hidden;
+			background: #fff;
+			box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		}
+	
+		.card-left {
+		}
+	
+		.card-right {
+			padding: 24px;
+		}
+	
+		.card-icon {
+			border-radius: 50%;
+			height: 60px;
+			margin-right: 16px;
+		}
+	
+		.card-album-title {
+			font-size: 2em;
+		}
+		
+		polymer-ui-card {
+			display: block;
+			height: 200px;
+			margin: 20px auto;
+			padding: 0;
+			border-radius: 3px;
+		}
+		.eventCount {
+			font-size:128px;
+			background-color:blue;
+			border-radius: 50%;
+			margin: 25px;
+			padding: 5px;
+		}
+		.attendee {
+			font-size: 14px;
+		}*/
+		
+		.eventCount {
+			font-size:128px;
+			background-color:blue;
+			border-radius: 50%;
+			margin: 25px;
+			padding: 5px;
+			text-align: center;
+		}
+
+		</style>
+
+		<core-animated-pages id="pages" selected="0" on-core-animated-pages-transition-end="{{transitionend}}" transitions="cross-fade-all hero-transition">
+			<section>
+				<div flex layout horizontal wrap around-justified>
+					<template repeat="{{event in eventCalendar.items}}">
+						<!-- EVENT -->
+						<polymer-ui-card layout horizontal>
+							<div layout flex two>
+								<div>
+									<core-icon icon="social:domain"></core-icon>
+									{{event.summary}}
+								</div>
+								<div>
+									<core-icon icon="social:person"></core-icon>
+									{{event.organizer.displayName}}
+								</div>
+							</div>
+							<div layout flex horizontal wrap>
+								<core-icon icon="social:group"></core-icon>
+								<template repeat="{{attendee in event.attendees}}">
+									{{attendee.displayName}},
+								</template>
+							</div>
+							<div layout flex class="eventCount">{{event.attendees.length}}</div>
+						</polymer-ui-card>
+						<!--<div class="chip">
+							<div class="chip-top">
+								<div class="eventCount">{{event.attendees.length}}</div>
+								<div>
+									<template repeat="{{attendee in event.attendees}}">
+										<p class="attendee">{{attendee.displayName}}</p>
+									</template>
+								</div>
+							</div>
+							<div self-stretch class="chip-bottom">
+								<div class="chip-album-title"><core-icon icon="social:domain"></core-icon>{{event.summary}}</div>
+								<div class="chip-artist"><core-icon icon="social:person"></core-icon>{{event.organizer.displayName}}</div>
+							</div>
+						</div>-->
+						<!--<polymer-ui-card vertical center center-justified layout class="polymer-ui-card">
+							<div class="chip-top" style="background-color:#{{item}}{{item}}{{item}};" hero-id="item-{{item}}-art" hero?="{{$.pages.selected === item + 1 || lastSelected === item + 1}}"></div>
+							<div class="chip-bottom">
+								<div class="chip-album-title">{{item}}</div>
+								<div class="chip-artist">{{item}}</div>
+							</div>
+						</polymer-ui-card>-->
+					</template>
+				</div>
+			</section>
+			
+			<template repeat="{{item in items}}">
+				 <section id="details">
+					<section class="card" layout horizontal hero-id="item-{{item}}" hero?="{{$.pages.selected === item + 1 || $.pages.selected === 0}}" on-tap="{{back}}">
+						<div flex vertical center center-justified layout class="card-left" style="background-color:#{{item}}{{item}}{{item}};" hero-id="item-{{item}}-art" hero?="{{$.pages.selected === item + 1 || $.pages.selected === 0}}"></div>
+						<div class="card-right" flex vertical center center-justified layout >
+							<div layout horizontal center>
+								<div>
+									<div class="card-icon" style="background-color:#{{item}}{{item}}{{item}};"></div>
+								</div>
+								<div flex>
+									<div class="card-album-title">{{item}}</div>
+									<div class="card-album-artist">{{item}}</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</section>
+			</template>
+			
+		</core-animated-pages>
+			
+	</template>
+	
+	<script>
+		var items = [], count=50;
+		for (var i=0; i < count; i++) {
+			items.push(i);
+		}
+		
+		Polymer('event-grid', {
+			
+			eventCalendar: {},
+			
+			setModelFromAngular: function(eventCalendar) {
+				this.eventCalendar = eventCalendar;
+			}
+
+		});
+	</script>
+	
+</polymer-element>

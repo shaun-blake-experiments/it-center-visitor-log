@@ -18,4 +18,19 @@ angular.module('iTCenterVisitorLog.components', [])
 			});
 		},
 	};
+})
+.directive('ngPolymerModel', function() {
+	return {
+		restrict: 'A',
+		template: '',
+		link: function(scope, elements, attrs) {
+			var scopeVarToWatch = attrs.ngPolymerModel;
+			var element = elements[0];
+			scope.$watch(scopeVarToWatch, function(newValue, oldValue) {
+				if(newValue !== oldValue) {
+					element.setModelFromAngular(newValue);
+				}
+			});
+		},
+	};
 });

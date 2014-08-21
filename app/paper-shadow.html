@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+
+  <script src="bower_components/platform/platform.js"></script>
+  <link rel="import" href="/bower_components/core-animated-pages/core-animated-pages.html">
+  <link rel="import" href="/bower_components/core-icons/core-icons.html">
+  <link rel="import" href="/bower_components/core-icons/social-icons.html">
+  <link rel="import" href="/bower_components/core-toolbar/core-toolbar.html">
+  <link rel="import" href="/bower_components/paper-shadow/paper-shadow.html">
+
+
+  
+
+</head>
+<body unresolved>
+
+  
+  
+  
+  <div id="myCard" class="card">Hello 1</div>
+  <hr/>
+<paper-shadow id="myShadow" z="1"></paper-shadow>
+<script>
+	//Paste this in the console once the page loads... not sure when it needs to be done programatically to work.
+		/*document.getElementById('myShadow').target = document.getElementById('myCard');*/
+</script>
+<hr/>
+
+
+
+<div class="card">
+  <paper-shadow z="1">Hello 3</paper-shadow>
+</div>
+
+<hr/>
+<div class="card paper-shadow-top paper-shadow-top-z-1" style="background-color:blue;">
+	Hello 4
+  <div class="card-inner paper-shadow-bottom paper-shadow-bottom-z-3" style="background-color:pink;">Hello 5</div>
+  Hello 6<br/>
+  Hello7
+</div>
+
+</body>
+</html>

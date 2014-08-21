@@ -1,0 +1,76 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/polymer-ui-card/polymer-ui-card.html">
+<link rel="import" href="/bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="/bower_components/core-icon/core-icon.html">
+<link rel="import" href="/bower_components/core-icons/social-icons.html">
+
+<polymer-element name="calendar-event" attributes="summary, organizer, attendeesArrayString, badgesArrayString" extends="polymer-ui-card">
+<template>
+	<style>
+	:host {
+		width: 45%;
+		position: relative;
+		float: left;
+		margin: 3px;
+		padding: 5px;
+	}
+	
+	paper-ripple {
+		border-radius: 2px;
+		overflow: hidden;
+	}
+	
+	core-icon {
+		color: grey;
+	}
+
+	</style>
+		<div layout horizontal>
+			<div layout flex one style="min-width:50px">
+				<template repeat="{{attendee, i in attendees}}">
+					<core-icon icon="social:person"></core-icon>
+					<template if="{{i < badges.length}}">
+						<core-icon icon="check" size="16"></core-icon>
+					</template>
+				</template>
+				<template if="{{attendees.length <= 0}}">
+					<core-icon icon="social:person-outline"></core-icon>
+				</template>
+			</div>
+			<div layout vertical flex three>
+				<h3>{{organizer}}</h3>
+				<p>{{summary}}</p>
+			</div>
+			<paper-ripple fit></paper-ripple>
+		</div>
+</template>
+	
+<script>
+	Polymer('calendar-event', {
+		/*
+			This is a hack to let angularjs control the attendees array.
+			When angular passes the array, it passes a string version.
+			We need to watch for changes from angular to the string version
+			and convert it to an actual array we can use.
+		*/
+		
+		created: function() {
+			this.attendees = [];
+			this.badges = [];
+		},
+		attributeChanged: function(attrName, oldVal, newVal) {
+			if(attrName == "attendeesarraystring") {
+				if(this.attendeesArrayString) {
+					this.attendees = JSON.parse(this.attendeesArrayString);
+				}
+			}
+			if(attrName == "badgesarraystring") {
+				if(this.badgesArrayString) {
+					this.badges = JSON.parse(this.badgesArrayString);
+				}
+			}
+		}
+	});
+</script>
+	
+</polymer-element>

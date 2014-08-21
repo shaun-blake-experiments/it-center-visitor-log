@@ -74,3 +74,24 @@ services.factory('googlePlusService', ['GCAL_API_KEY', 'GCAL_CLIENT_ID', 'GCAL_S
 }]);
 
 
+services.factory('googleCalendarService', ['GCAL_API_KEY', 'GCAL_CLIENT_ID', 'GCAL_SCOPES', '$q', function(GCAL_API_KEY, GCAL_CLIENT_ID, GCAL_SCOPES, $q) {
+	var googleCalendarService = {};
+	
+	googleCalendarService.getTodaysEvents = function(){
+		console.log('%cGetting Calendar Events', 'color: blue;');
+		var deferred = $q.defer();
+		gapi.client.load('calendar', 'v3', function() {
+			//Make it easy by using Moment.js
+			var today = moment("20140813", "YYYYMMDD").startOf('day');
+			var tomorrow = moment("20140813", "YYYYMMDD").startOf('day').add(1, 'days');
+			gapi.client.calendar.events.list({calendarId: 'primary', timeMin: today.toDate(), timeMax: tomorrow.toDate()}).execute(function(resp) {
+				console.log(resp);
+				deferred.resolve(resp);
+			});
+		});
+		return deferred.promise;
+	};
+	
+	return googleCalendarService;
+}]);
+
