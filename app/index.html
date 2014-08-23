@@ -22,8 +22,8 @@
 	<section>
 		<input type="search" ng-model="q" placeholder="Search..." />
 		<br/>
-		<div layout horizontal wrap center center-justified>
-			<calendar-event self-stretch summary="{{event.summary}}" organizer="{{event.organizer.displayName}}" ng-attendees="event.attendees" ng-badges="event.badges" ng-repeat="event in calendarEvents.items | filter:q"></calendar-event>
+		<div layout horizontal wrap center-justified>
+			<calendar-event summary="{{event.summary}}" organizer="{{event.organizer.displayName}}" ng-attendees="event.attendees" ng-badges="event.badges" ng-repeat="event in calendarEvents.items | filter:q"></calendar-event>
 		</div>
 		<div class="divider" layout horizontal center center-justified>
 			<core-icon icon="social:domain"></core-icon>

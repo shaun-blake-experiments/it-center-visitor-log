@@ -7,6 +7,14 @@ window.NG_POLYMER_ELEMENTS_EXTENDED_MAPPINGS = {
 			array : 'attendees'
 		}
 	},
+	calendarEventChip: {
+		ngBadges : {
+			array : 'badges'
+		},
+		ngAttendees : {
+			array : 'attendees'
+		}
+	},
 	uhScaffolding: {
 		ngUser : {
 			object : 'user'

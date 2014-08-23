@@ -1,54 +1,83 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
-<link rel="import" href="/bower_components/polymer-ui-card/polymer-ui-card.html">
-<link rel="import" href="/bower_components/paper-ripple/paper-ripple.html">
-<link rel="import" href="/bower_components/core-icon/core-icon.html">
-<link rel="import" href="/bower_components/core-icons/social-icons.html">
+<link rel="import" href="/elements/calendar-event-chip.html">
+<!-- <link rel="import" href="/bower_components/core-animated-pages/core-animated-pages.html"> -->
+<link rel="import" href="/bower_components/core-selector/core-selector.html">
+<link rel="import" href="/bower_components/core-animated-pages/transitions/hero-transition.html">
+<link rel="import" href="/bower_components/core-animated-pages/transitions/cross-fade.html">
 
-<polymer-element name="calendar-event" attributes="summary, organizer, attendees, badges" extends="polymer-ui-card">
+<polymer-element name="calendar-event" attributes="summary, organizer, attendees, badges">
 <template>
 	<style>
 	:host {
 		width: 45%;
-		position: relative;
-		float: left;
 		margin: 3px;
 		padding: 5px;
+		/*Couldn't figure out how to get this using the polymer layout attributes*/
+		display: flex;
+	}
+	core-animated-pages section {
+		width: 100%;
+		display:flex
 	}
 	
-	paper-ripple {
-		border-radius: 2px;
-		overflow: hidden;
+	.fit {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
 	}
 	
-	core-icon {
-		color: grey;
-	}
-	#attendees {
-		min-width: 75px;
+	#hero1 {
+        width: 100px;
+        height: 100px;
+        background-color: orange;
+      }
+      #hero2 {
+        width: 200px;
+        height: 200px;
+        background-color: orange;
+      }
+	.invisible {
+		visibility: hidden;
 	}
 	</style>
-		<div layout horizontal>
-			<div layout flex one id="attendees">
-				<template repeat="{{attendee, i in attendees}}">
-					<core-icon icon="social:person"></core-icon>
-					<template if="{{i < badges.length}}">
-						<core-icon icon="check" size="16"></core-icon>
-					</template>
-				</template>
-				<template if="{{attendees.length <= 0}}">
-					<core-icon icon="social:person-outline"></core-icon>
-				</template>
-			</div>
-			<div layout vertical flex three>
-				<h3>{{organizer}}</h3>
-				<p>{{summary}}</p>
-			</div>
-			<paper-ripple fit></paper-ripple>
-		</div>
+		<!-- <core-selector id="selector">
+			<div id="test1" on-tap="{{test1}}">Item 1</div>
+			<div id="test2" on-tap="{{test2}}" class="invisible" >Item 2</div>
+			<div id="test3" on-tap="{{test3}}" class="invisible" >Item 3</div>
+		</core-selector> -->
+		<core-animated-pages id="animatedPages" transitions="hero-transistion">
+			<section id="page1" on-tap="{{showDetails}}" style="position: relative;" >
+				<calendar-event-chip hero-id="hero" hero id="summary" style="position: relative;" summary="{{summary}}" organizer="{{organizer}}" attendees="{{attendees}}" badges="{{badges}}" on-tap="{{showDetails}}" ></calendar-event-chip>
+			</section>
+			<section id="page2" on-tap="{{hideDetails}}" style="position: relative;" class="invisible">
+				<calendar-event-chip hero-id="hero" hero id="detail"  style="position: relative;" summary="{{summary}} detail" organizer="{{organizer}} detail" attendees="{{attendees}}" badges="{{badges}}" on-tap="{{hideDetails}}" ></calendar-event-chip>
+			</section>
+		</core-animated-pages>
+		<!-- <core-animated-pages id="animatedPages" transitions="hero-transition cross-fade">
+          <section id="page1" on-tap="{{showDetails}}" style="position: relative;" >
+            <div id="hero1" hero-id="hero" hero></div>
+          </section>
+          <section id="page2" on-tap="{{hideDetails}}" style="position: relative;" >
+            <div id="hero2" hero-id="hero" hero></div>
+          </section>
+        </core-animated-pages> -->
 </template>
 	
 <script>
-	Polymer('calendar-event', {});
+	Polymer('calendar-event', {
+		showDetails: function() {
+			this.$.animatedPages.selected = 1;
+			this.$.page1.className = this.$.page1.className + " invisible";
+			this.$.page2.className = this.$.page2.className.replace(/\binvisible\b/,'');
+		},
+		hideDetails: function() {
+			this.$.animatedPages.selected = 0;
+			this.$.page2.className = this.$.page2.className + " invisible";
+			this.$.page1.className = this.$.page1.className.replace(/\binvisible\b/,'');
+		}
+	});
 </script>
 	
 </polymer-element>
