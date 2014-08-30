@@ -8,12 +8,13 @@ angular.module('iTCenterVisitorLog.controllers', ['ngRoute'])
 		});
 })
 
-.controller('MainCtrl', ['$scope', '$http', '$location', 'googleAuthService', 'googlePlusService', 'googleCalendarService', function($scope, $http, $location, googleAuthService, googlePlusService, googleCalendarService) {
+.controller('MainCtrl', ['$scope', '$http', '$location', 'orderByFilter', 'googleAuthService', 'googlePlusService', 'googleCalendarService', function($scope, $http, $location, orderByFilter, googleAuthService, googlePlusService, googleCalendarService) {
 	$scope.authenticated = false;
 	$scope.userInfo = {};
 	$scope.userInfoResolved = false;
 	$scope.calendarEvents = {};
 	$scope.calendarEventsResolved = false;
+	$scope.googleCalendarService = googleCalendarService;
 	
 	$scope.init = function() {
 		googleAuthService.init();
@@ -29,11 +30,8 @@ angular.module('iTCenterVisitorLog.controllers', ['ngRoute'])
 			});
 			
 			googleCalendarService.getTodaysEvents().then(function(calendarEvents) {
-				/*TODO remove this*/
-				for (var i = 0; i < calendarEvents.items.length; i++) {
-					calendarEvents.items[i].badges = [1,2];
-				}
 				$scope.calendarEvents = calendarEvents;
+				$scope.calendarEvents.items = orderByFilter($scope.calendarEvents.items, '+start.dateTime');
 				$scope.calendarEventsResolved = true;
 			});
 		});

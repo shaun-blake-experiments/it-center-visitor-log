@@ -92,6 +92,22 @@ services.factory('googleCalendarService', ['GCAL_API_KEY', 'GCAL_CLIENT_ID', 'GC
 		return deferred.promise;
 	};
 	
+	googleCalendarService.updateEvent = function(event){
+		console.log('%cUpdating Event:', 'color: blue;');
+		console.log(event);
+		
+		var updateParams = {calendarId: 'primary', eventId: event.id, resource: event};
+		
+		var deferred = $q.defer();
+		gapi.client.load('calendar', 'v3', function() {
+			gapi.client.calendar.events.update(updateParams).execute(function(resp) {
+				console.log(resp);
+				deferred.resolve(resp);
+			});
+		});
+		return deferred.promise;
+	};
+	
 	return googleCalendarService;
 }]);
 

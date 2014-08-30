@@ -1,18 +1,10 @@
 window.NG_POLYMER_ELEMENTS_EXTENDED_MAPPINGS = {
-	calendarEvent: {
-		ngBadges : {
-			array : 'badges'
+	eventGrid: {
+		ngEvents : {
+			array : 'events'
 		},
-		ngAttendees : {
-			array : 'attendees'
-		}
-	},
-	calendarEventChip: {
-		ngBadges : {
-			array : 'badges'
-		},
-		ngAttendees : {
-			array : 'attendees'
+		ngGoogleCalendarService: {
+			object : 'googleCalendarService'
 		}
 	},
 	uhScaffolding: {

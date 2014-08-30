@@ -1,0 +1,244 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/core-animated-pages/core-animated-pages.html">
+<link rel="import" href="/bower_components/core-animated-pages/transitions/hero-transition.html">
+<link rel="import" href="/bower_components/core-animated-pages/transitions/cross-fade.html">
+<link rel="import" href="/bower_components/core-animated-pages/transitions/tile-cascade.html">
+<link rel="import" href="/bower_components/core-animated-pages/transitions/slide-down.html">
+<link rel="import" href="/bower_components/core-animated-pages/transitions/slide-up.html">
+<link rel="import" href="/bower_components/core-icon/core-icon.html">
+<link rel="import" href="/bower_components/core-icons/social-icons.html">
+<link rel="import" href="/bower_components/core-selector/core-selector.html">
+<link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="/elements/calendar-event-chip.html">
+<link rel="import" href="/elements/custom-iconset.html">
+
+<polymer-element name="event-grid" attributes="events, googleCalendarService"> <template>
+
+<style>
+.chip-container {
+	text-align: center;
+}
+
+.chip {
+	display: inline-block;
+	position: relative;
+	border-radius: 3px;
+	margin: 4px;
+	overflow: hidden;
+	text-align: start;
+	background-color: #fff;
+	box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
+	width: 17vw;
+}
+
+.chip-top {
+	height: 200px;
+}
+
+.chip-bottom {
+	padding: 8px;
+	line-height: 1.5;
+}
+
+.chip-summary {
+	font-weight: bold;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.chip-organizer {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+#details {
+	padding: 100px 10% 0 10%;
+}
+
+.card {
+	/* height: 400px; */
+	border-radius: 3px;
+	text-align: start;
+	overflow: hidden;
+	background: #fff;
+	box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.card-left {
+	width: 400px;
+}
+
+.card-right {
+	padding: 24px;
+	padding-right: 0px;
+}
+
+.card-icon {
+	border-radius: 50%;
+	width: 60px;
+	height: 60px;
+	margin-right: 16px;
+}
+
+.card-summary {
+	font-size: 2em;
+}
+
+.chip core-icon {
+}
+.card core-icon[icon="social:person"] {
+	height: 64px;
+	width: 64px;
+}
+.card core-icon[icon="custom-icons:visitor-badge"] {
+	height: 48px;
+	width: 48px;
+}
+.divider {
+	margin: 20px 0px;
+	height: 3px;
+	background: #f9f9f9;
+	border-radius: 2px;
+	padding: 0;
+}
+paper-icon-button {
+	margin: 3px;
+}
+</style>
+
+<core-animated-pages selected="{{page}}" transitions="hero-transition" on-core-animated-pages-transition-end="{{complete}}">
+
+<section>
+
+	<div class="chip-container" hero-p>
+
+		<template repeat="{{event in events}}">
+
+		<div class="chip" hero-id="{{event.id}}" hero?="{{selectedEvent === event }}" on-tap="{{showDetails}}">
+			<div class="chip-top" style="background: white" hero-id="{{event.id}}-art" hero?="{{selectedEvent === event}}">
+				<template repeat="{{attendee, i in event.attendees}}">
+					<core-icon icon="social:person" hero-id="{{event.id}}-person-{{i}}" hero?="{{selectedEvent === event}}"></core-icon>
+				</template>
+				<template if="{{attendees.length <= 0}}">
+					<core-icon icon="social:person-outline" ></core-icon>
+				</template>
+			</div>
+			<div class="chip-bottom">
+				<div class="chip-summary">{{event.summary}}</div>
+				<div class="chip-organizer">{{event.organizer.displayName}}</div>
+			</div>
+		</div>
+
+		</template>
+
+	</div>
+</section>
+
+<section id="details">
+
+	<div class="card" layout horizontal hero-id="{{selectedEvent.id}}" hero>
+		<div class="card-left" style="background: white" hero-id="{{selectedEvent.id}}-art" hero>
+			<template repeat="{{attendee, i in selectedEvent.attendees}}">
+				<core-icon icon="social:person" hero-id="{{selectedEvent.id}}-person-{{i}}" hero ></core-icon>
+			</template>
+			<template if="{{attendees.length <= 0}}">
+				<core-icon icon="social:person-outline"></core-icon>
+			</template>
+		</div>
+		<div class="card-right" flex>
+			<div layout horizontal center>
+				<!-- <div>
+					<div class="card-icon" style="background: black"></div>
+				</div> -->
+				<div flex>
+					<div class="card-summary">{{selectedEvent.summary}}</div>
+					<div class="card-organizer">{{selectedEvent.organizer.displayName}}</div>
+					<div class="card-description">{{selectedEvent.description}}</div>
+					<div class="divider" layout horizontal center center-justified>
+						<core-icon icon="social:domain"></core-icon>
+					</div>
+					<div id="badgesContainer" layout horizontal wrap center-justified>
+						<template repeat="{{badge, i in badges}}">
+							<!-- TODO get the selected expression right -->
+							<core-selector selected="{{badges[i] ? 0:null}}">
+								<paper-icon-button fill isToggle icon="custom-icons:visitor-badge" label="{{i < 9 ? '&nbsp;&nbsp;' : ''}}{{i+1}}" on-tap="{{toggleBadge}}"></paper-icon-button>
+							</core-selector>
+						</template>
+					</div>
+				</div>
+				<div layout vertical justified self-stretch>
+					<paper-icon-button icon="close" on-tap="{{hideDetails}}"></paper-icon-button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</section>
+
+</core-animated-pages> </template> <script>
+	Polymer('event-grid', {
+
+		page : 0,
+
+		badges: new Array(20), 
+
+		selectedEvent : null,
+
+		showDetails : function(e) {
+			this.page = 1;
+			this.selectedEvent = e.target.templateInstance.model.event;
+			/* if(this.selectedEvent.extendedProperties) {
+				for (var i=0; i<this.badges.length; i++) {
+					this.badges[i] = this.selectedEvent.extendedProperties.shared["badge" + i] == "true";
+				}
+			} */
+		},
+		
+		hideDetails : function(e) {
+			this.page = 0;
+			/* this.selectedEvent = null; */
+			/* for (var i=0; i<this.badges.length; i++) {
+				this.badges[i] = false;
+			} */
+		},
+		
+		complete: function() {
+			var sharedProperties = [];
+			if(this.selectedEvent.extendedProperties) {
+				sharedProperties = this.selectedEvent.extendedProperties.shared;
+			}
+			if(this.page == 1) {
+				for (var i=0; i<this.badges.length; i++) {
+					this.badges[i] = sharedProperties["badge" + i] == "true";
+				}
+			}
+			else {
+				this.selectedEvent = null;
+				for (var i=0; i<this.badges.length; i++) {
+					this.badges[i] = false;
+				}
+				var buttons = this.$.badgesContainer.querySelectorAll("paper-icon-button");
+				for(var i=0; i<buttons.length; i++) {
+					buttons[i].active = false;
+				}
+			}
+		},
+
+		toggleBadge: function(event, detail, element) {
+			var badgeIndex = event.target.templateInstance.model.i;
+			
+			if(!this.selectedEvent.extendedProperties) {
+				this.selectedEvent.extendedProperties = {shared: {}};
+			}
+			this.selectedEvent.extendedProperties.shared["badge" + badgeIndex] = element.active;
+			
+			this.googleCalendarService.updateEvent(this.selectedEvent).then(function(response) {
+				console.log("grid got back response: ");
+				console.log(response);
+			});
+		}
+	});
+</script> </polymer-element>

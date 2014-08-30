@@ -19,15 +19,14 @@
 </head>
 <body unresolved fullbleed ng-controller="MainCtrl" data-ng-init="init()">
 <uh-scaffolding ng-user="userInfo">
-	<section>
-		<input type="search" ng-model="q" placeholder="Search..." />
-		<br/>
-		<div layout horizontal wrap center-justified>
-			<calendar-event summary="{{event.summary}}" organizer="{{event.organizer.displayName}}" ng-attendees="event.attendees" ng-badges="event.badges" ng-repeat="event in calendarEvents.items | filter:q"></calendar-event>
-		</div>
-		<div class="divider" layout horizontal center center-justified>
+	<div class="divider" layout horizontal center center-justified>
 			<core-icon icon="social:domain"></core-icon>
 		</div>
+	<section>
+		<input type="search" ng-model="q" placeholder="Search..." />
+		<event-grid ng-events="calendarEvents.items | filter:q" ng-google-calendar-service="googleCalendarService"></event-grid>
+		
+		
 	</section>
 </uh-scaffolding>
 
@@ -50,7 +49,7 @@
 <link rel="import" href="/bower_components/core-input/core-input.html">
 <link rel="import" href="/bower_components/paper-input/paper-input.html">
 <link rel="import" href="/elements/uh-scaffolding.html">
-<link rel="import" href="/elements/calendar-event.html">
+<link rel="import" href="/elements/event-grid.html">
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <script>
