@@ -10,7 +10,6 @@
 <link rel="import" href="/bower_components/core-selector/core-selector.html">
 <link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="/bower_components/paper-ripple/paper-ripple.html">
-<link rel="import" href="/elements/calendar-event-chip.html">
 <link rel="import" href="/elements/custom-iconset.html">
 
 <polymer-element name="event-grid" attributes="events, googleCalendarService"> <template>
@@ -93,6 +92,10 @@
 	height: 64px;
 	width: 64px;
 }
+.card .card-left core-icon[icon="custom-icons:visitor-badge"] {
+	height: 24px;
+	width: 24px;
+}
 .card core-icon[icon="custom-icons:visitor-badge"] {
 	height: 48px;
 	width: 48px;
@@ -115,7 +118,7 @@ paper-icon-button {
 
 	<div class="chip-container" hero-p>
 
-		<template repeat="{{event in events}}">
+		<template repeat="{{event, i in events}}">
 
 		<div class="chip" hero-id="{{event.id}}" hero?="{{selectedEvent === event }}" on-tap="{{showDetails}}">
 			<div class="chip-top" style="background: white" hero-id="{{event.id}}-art" hero?="{{selectedEvent === event}}">
@@ -140,9 +143,15 @@ paper-icon-button {
 <section id="details">
 
 	<div class="card" layout horizontal hero-id="{{selectedEvent.id}}" hero>
-		<div class="card-left" style="background: white" hero-id="{{selectedEvent.id}}-art" hero>
+		<div class="card-left" layout vertical style="background: white" hero-id="{{selectedEvent.id}}-art" hero>
 			<template repeat="{{attendee, i in selectedEvent.attendees}}">
-				<core-icon icon="social:person" hero-id="{{selectedEvent.id}}-person-{{i}}" hero ></core-icon>
+				<div layout horizontal center>
+					<template if="{{i < assignedBadgesCount}}">
+						<core-icon icon="custom-icons:visitor-badge"></core-icon>
+					</template>
+					<core-icon icon="social:person" hero-id="{{selectedEvent.id}}-person-{{i}}" hero ></core-icon>
+					<p flex two>Shaun Blake</p>
+				</div>
 			</template>
 			<template if="{{attendees.length <= 0}}">
 				<core-icon icon="social:person-outline"></core-icon>
@@ -160,6 +169,12 @@ paper-icon-button {
 					<div class="divider" layout horizontal center center-justified>
 						<core-icon icon="social:domain"></core-icon>
 					</div>
+					<template if="{{assignedBadgesCount != selectedEvent.attendees.length}}">
+						{{selectedEvent.attendees.length - assignedBadgesCount}} to Go
+					</template>
+					<template if="{{assignedBadgesCount == selectedEvent.attendees.length}}">
+						All Badges Assinged
+					</template>
 					<div id="badgesContainer" layout horizontal wrap center-justified>
 						<template repeat="{{badge, i in badges}}">
 							<!-- TODO get the selected expression right -->
@@ -183,47 +198,30 @@ paper-icon-button {
 
 		page : 0,
 
-		badges: new Array(20), 
+		badges: new Array(20),
+		
+		assignedBadgesCount: 0,
 
 		selectedEvent : null,
+		
+		selectedEventIndex: -1,
 
 		showDetails : function(e) {
 			this.page = 1;
 			this.selectedEvent = e.target.templateInstance.model.event;
-			/* if(this.selectedEvent.extendedProperties) {
-				for (var i=0; i<this.badges.length; i++) {
-					this.badges[i] = this.selectedEvent.extendedProperties.shared["badge" + i] == "true";
-				}
-			} */
+			this.selectedEventIndex = e.target.templateInstance.model.i;
 		},
 		
 		hideDetails : function(e) {
 			this.page = 0;
-			/* this.selectedEvent = null; */
-			/* for (var i=0; i<this.badges.length; i++) {
-				this.badges[i] = false;
-			} */
 		},
 		
 		complete: function() {
-			var sharedProperties = [];
-			if(this.selectedEvent.extendedProperties) {
-				sharedProperties = this.selectedEvent.extendedProperties.shared;
-			}
 			if(this.page == 1) {
-				for (var i=0; i<this.badges.length; i++) {
-					this.badges[i] = sharedProperties["badge" + i] == "true";
-				}
+				this.updateAssignedBadges();
 			}
 			else {
-				this.selectedEvent = null;
-				for (var i=0; i<this.badges.length; i++) {
-					this.badges[i] = false;
-				}
-				var buttons = this.$.badgesContainer.querySelectorAll("paper-icon-button");
-				for(var i=0; i<buttons.length; i++) {
-					buttons[i].active = false;
-				}
+				this.resetAssignedBadges();
 			}
 		},
 
@@ -235,10 +233,45 @@ paper-icon-button {
 			}
 			this.selectedEvent.extendedProperties.shared["badge" + badgeIndex] = element.active;
 			
+			var scope = this;
 			this.googleCalendarService.updateEvent(this.selectedEvent).then(function(response) {
-				console.log("grid got back response: ");
-				console.log(response);
+				//TODO -- Error checking....
+				scope.events[scope.selectedEventIndex] = response;
+				//TODO -- Do I need to do this or is it already referenced...
+				scope.selectedEvent = scope.events[scope.selectedEventIndex];
+				scope.updateAssignedBadges();
 			});
-		}
+		},
+		
+		updateAssignedBadges: function() {
+			this.assignedBadgesCount = 0;
+			if(!this.selectedEvent.extendedProperties) {
+				this.resetAssignedBadges();
+				return;
+			}
+			var sharedProperties = this.selectedEvent.extendedProperties.shared;
+			for (var i=0; i<this.badges.length; i++) {
+				if(sharedProperties["badge" + i] == "true") {
+					this.badges[i] = true;
+					this.assignedBadgesCount++;
+				}
+				else {
+					this.badges[i] = false;
+				}
+			}
+		},
+		
+		resetAssignedBadges: function() {
+			this.selectedEvent = null;
+			this.selectedEventIndex = -1;
+			for (var i=0; i<this.badges.length; i++) {
+				this.badges[i] = false;
+			}
+			var buttons = this.$.badgesContainer.querySelectorAll("paper-icon-button");
+			for(var i=0; i<buttons.length; i++) {
+				buttons[i].active = false;
+			}
+			this.assignedBadgesCount = 0;
+		} 
 	});
 </script> </polymer-element>
