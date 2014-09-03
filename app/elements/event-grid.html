@@ -150,7 +150,7 @@ paper-icon-button {
 						<core-icon icon="custom-icons:visitor-badge"></core-icon>
 					</template>
 					<core-icon icon="social:person" hero-id="{{selectedEvent.id}}-person-{{i}}" hero ></core-icon>
-					<p flex two>Shaun Blake</p>
+					<p flex two>{{attendee.displayName}}</p>
 				</div>
 			</template>
 			<template if="{{attendees.length <= 0}}">
