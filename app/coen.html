@@ -1,0 +1,73 @@
+<!doctype html>
+<html class="no-js" ng-app="iTCenterVisitorLog">
+<head>
+	<meta charset="utf-8">
+	<title>it center visitor log</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width">
+	<link rel="shortcut icon" href="/favicon.ico">
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- build:css(.) styles/vendor.css -->
+	<!-- bower:css -->
+	<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+	<!-- endbower -->
+	<!-- endbuild -->
+	<!-- build:css(.tmp) styles/main.css -->
+	<link rel="stylesheet" href="styles/main.css">
+	<!-- endbuild -->
+	
+</head>
+<body unresolved fullbleed ng-controller="MainCtrl" data-ng-init="init()">
+<uh-scaffolding ng-user="userInfo">
+		<section>
+			<core-icon icon="custom-icons:light-bulb"></core-icon> <h1>Hello Ash and Pikachu</h1>
+		</section>
+		<div class="divider" layout horizontal center center-justified>
+			<core-icon icon="social:domain"></core-icon>
+		</div>
+		<section>
+			<core-icon icon="custom-icons:light-bulb"></core-icon> <h1>Hello Skitty and Pikachu</h1>
+		</section>
+</uh-scaffolding>
+
+<!-- build:js(.) scripts/vendor.js -->
+<!-- ng-polymer-elements script needs the config loaded first -->
+<script src="scripts/ng-polymer-elements-cfg.js"></script>
+<!-- bower:js -->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-googleapi/src/angular-googleapi.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/platform/platform.js"></script>
+<script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/ng-polymer-elements/ng-polymer-elements.js"></script>
+<!-- endbower -->
+<script src="https://apis.google.com/js/client.js"></script>
+<!-- endbuild -->
+
+
+<link rel="import" href="/bower_components/core-input/core-input.html">
+<link rel="import" href="/bower_components/paper-input/paper-input.html">
+<link rel="import" href="/elements/uh-scaffolding.html">
+<link rel="import" href="/elements/event-grid.html">
+<link rel="import" href="/elements/custom-iconset.html">
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script>
+  (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+  function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+  e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+  e.src='//www.google-analytics.com/analytics.js';
+  r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+  ga('create','UA-XXXXX-X');ga('send','pageview');
+</script>
+
+<!-- build:js({app,.tmp}) scripts/main.js -->
+<script src="scripts/app.js"></script>
+<script src="scripts/controllers.js"></script>
+<script src="scripts/components.js"></script>
+<script src="scripts/services.js"></script>
+<!-- endbuild -->
+
+</body>
+</html>

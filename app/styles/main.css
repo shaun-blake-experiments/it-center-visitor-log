@@ -51,3 +51,108 @@ paper-button[raisedButton].colored::shadow #focusBg {
 	fill: #919cd6;
 	background: #eaeaea
 }
+
+core-icon[icon="custom-icons:light-bulb"] {
+	height: 300px;
+	width: 300px;
+}
+
+.lightbulb {
+  cursor: pointer;
+}
+
+.lightbulb * {
+  -webkit-transition: .4s;
+  -moz-transition: .4s;
+  transition: .4s;
+}
+
+.lightbulb .icon-container {
+  fill: #fff;
+  stroke-width: 6;
+  stroke: #fff;
+
+  -webkit-transition: .3s;
+  -moz-transition: .3s;
+  transition: .3s;
+  fill: #fff8db;
+}
+
+.lightbulb:hover .icon-container {
+  fill: #fff8db;
+
+  -webkit-transition: 2s;
+  transition: 2s;
+  -webkit-transition: 2s;
+}
+
+.lightbulb .lightbulb-light * {
+  stroke-width: 16;
+  stroke: #ddd;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: #fc0;
+  stroke-width: 32;
+}
+
+.lightbulb:hover .lightbulb-light * {
+  stroke: #fc0;
+  stroke-width: 32;
+}
+
+.lightbulb .lightbulb-base {
+  fill: #666;
+}
+
+.lightbulb .lightbulb-screws * {
+  fill: none;
+  stroke-width: 16;
+  stroke: #333;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.lightbulb .icon-container {
+  fill: orange;
+  stroke-width: 18;
+  stroke: green;
+}
+
+
+
+
+
+
+
+.lightbulb .lightbulb-light * {
+  stroke-width: 32;
+  stroke: red;
+}
+
+
+
+
